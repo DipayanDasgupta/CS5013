@@ -1,0 +1,6 @@
+build/
+libs/
+coverage/
+jacoco.exec
+*.Zone.Identifier
+*.class

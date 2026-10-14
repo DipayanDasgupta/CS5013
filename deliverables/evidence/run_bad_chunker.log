@@ -1,0 +1,71 @@
+Indexed 12 chunk(s) from sample-repo in 287 ms
+Embedder: MiniLmEmbedder all-MiniLM-L6-v2[dim=384] | LLM: OllamaLlm[llama3.2:3b]
+
+# chunker replaced: fixed 50-line slabs instead of method boundaries.
+# Sampling of the 11 questions the run reached (retrieval trace only; every
+# hit is a 37-66 line slab):
+
+=== Q: Where is the fine for an overdue loan computed?
+  hit: sample-repo/com/example/util/FinePolicy.java:1-37
+  hit: sample-repo/com/example/core/Loan.java:1-50
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/core/Loan.java:51-55
+  hit: sample-repo/com/example/core/Member.java:1-50
+  hit: sample-repo/com/example/api/ReportService.java:1-44
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+  hit: sample-repo/com/example/core/Book.java:1-50
+
+=== Q: What class holds the catalogue of books, and how is it indexed?
+  hit: sample-repo/com/example/util/Catalog.java:1-50
+  hit: sample-repo/com/example/core/Book.java:1-50
+  hit: sample-repo/com/example/core/Book.java:51-66
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/core/Member.java:51-54
+  hit: sample-repo/com/example/core/Member.java:1-50
+  hit: sample-repo/com/example/api/ReportService.java:1-44
+
+=== Q: How does the system decide a loan has been returned?
+  hit: sample-repo/com/example/core/Loan.java:1-50
+  hit: sample-repo/com/example/core/Loan.java:51-55
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/api/ReportService.java:1-44
+  hit: sample-repo/com/example/util/FinePolicy.java:1-37
+  hit: sample-repo/com/example/core/Member.java:1-50
+  hit: sample-repo/com/example/core/Member.java:51-54
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+
+=== Q: Which methods write to the loan registry?
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/core/Loan.java:1-50
+  hit: sample-repo/com/example/api/ReportService.java:1-44
+  hit: sample-repo/com/example/core/Loan.java:51-55
+  hit: sample-repo/com/example/core/Member.java:1-50
+  hit: sample-repo/com/example/util/FinePolicy.java:1-37
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+  hit: sample-repo/com/example/core/Book.java:1-50
+
+=== Q: How are books searched by title, and is the search tokenised?
+  hit: sample-repo/com/example/util/Catalog.java:1-50
+  hit: sample-repo/com/example/core/Book.java:51-66
+  hit: sample-repo/com/example/core/Book.java:1-50
+  hit: sample-repo/com/example/core/Member.java:51-54
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+  hit: sample-repo/com/example/core/Loan.java:1-50
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/core/Member.java:1-50
+
+=== Q: What does the report service compute about loans per genre?
+  hit: sample-repo/com/example/api/ReportService.java:1-44
+  hit: sample-repo/com/example/core/LoanRegistry.java:1-43
+  hit: sample-repo/com/example/core/Loan.java:1-50
+  hit: sample-repo/com/example/api/LibraryService.java:1-50
+  hit: sample-repo/com/example/core/Book.java:1-50
+  hit: sample-repo/com/example/core/Loan.java:51-55
+  hit: sample-repo/com/example/core/Member.java:1-50
+  hit: sample-repo/com/example/util/FinePolicy.java:1-37
+
+# --- Summary (see 6A-notes.md section 3) ---
+# chunks:                50 -> 12
+# method-precision @8:  0.90 -> 0.00
+# containment @8:       0.90 -> 1.00  (only because 8 of 12 chunks = 67% of corpus)

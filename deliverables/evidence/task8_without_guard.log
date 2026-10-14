@@ -1,0 +1,74 @@
+SLF4J(W): No SLF4J providers were found.
+SLF4J(W): Defaulting to no-operation (NOP) logger implementation
+SLF4J(W): See https://www.slf4j.org/codes.html#noProviders for further details.
+GUARD_PRESENT=false
+=== Q: How does this project integrate with the Spring Framework and provide REST controllers?
+  hit: sample-repo/com/example/api/LibraryService.java:47-49
+  hit: sample-repo/com/example/core/Book.java:31-33
+  hit: sample-repo/com/example/core/Book.java:39-41
+  hit: sample-repo/com/example/api/ReportService.java:18-18
+  hit: sample-repo/com/example/core/Book.java:35-37
+  hit: sample-repo/com/example/core/Book.java:62-65
+  hit: sample-repo/com/example/core/Book.java:13-17
+  hit: sample-repo/com/example/api/ReportService.java:20-22
+--- A: To integrate this project with the Spring Framework and provide REST controllers, you can follow these steps:
+
+1. **Add Spring dependencies**: Update the `pom.xml` file (if you're using Maven) or the `build.gradle` file (if you're using Gradle) to include the necessary Spring dependencies. For example, add the following to your `pom.xml` file:
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+</dependencies>
+```
+2. **Configure Spring Boot**: Create a `application.properties` file to configure Spring Boot. For example:
+```properties
+spring.datasource.url=jdbc:h2:mem:librarydb
+spring.datasource.username=sa
+spring.datasource.password=
+spring.jpa.hibernate.ddl-auto=update
+```
+3. **Create REST controllers**: Create a new package, e.g., `com.example.api`, and create a new class, e.g., `LibraryController`. This class will handle REST requests for the library service.
+```java
+// com.example.api/LibraryController.java
+@RestController
+@RequestMapping("/api/library")
+public class LibraryController {
+    @Autowired
+    private LibraryService libraryService;
+
+    @GetMapping
+    public List<Book> search(@RequestParam String needle) {
+        return libraryService.search(needle);
+    }
+
+    @GetMapping("/{isbn}")
+    public Book getBook(@PathVariable String isbn) {
+        return libraryService.getBook(isbn);
+    }
+}
+```
+4. **Configure Spring Data JPA**: Create a `BookRepository` interface that extends `JpaRepository`. This interface will define the data access methods for the `Book` entity.
+```java
+// com.example.core/BookRepository.java
+public interface BookRepository extends JpaRepository<Book, Long> {
+    @Query("SELECT b FROM Book b WHERE b.title = :title")
+    Book findByTitle(@Param("title") String title);
+}
+```
+5. **Create a main application class**: Create a new class, e.g., `LibraryApplication`, that will serve as the main application class.
+```java
+// com.example.LibraryApplication.java
+@SpringBootApplication
+public class LibraryApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(LibraryApplication.class, args);
+    }
+}
+```
+6.
